@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdBlock Detection Demo</title>
+
+    <style>
+        body
+        {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+            font-family: system-ui, sans-serif, monospace;
+            background: #222222;
+            color: white;
+            font-size: 2em;
+        }
+    </style>
+</head>
+<body>
+
+
+    <script>
+        (async function() {
+            try
+            {
+                await fetch('/_prebid.js');
+                await fetch('/ad_common.js');
+                await fetch('/ad_code.js');
+            
+                // if the codes reaches here, it means all the fetch calls were successful
+                console.log("Adblock Not Active.");
+
+                document.body.insertAdjacentHTML("afterbegin", "<h1>Adblock Not Active</h1>");
+            }
+            catch (error)
+            {
+                // At least one fetch call failed
+                console.log("Adblock Detected.");
+
+                document.body.insertAdjacentHTML("afterbegin", "<h1>Adblock Detected</h1>");
+            }
+        })();
+    </script>
+</body>
+</html>
